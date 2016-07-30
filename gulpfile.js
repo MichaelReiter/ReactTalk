@@ -2,8 +2,9 @@ const gulp   = require('gulp');
 const babel  = require('gulp-babel');
 const stylus = require('gulp-stylus');
 
-const jsSource     = './src/**/*.js';
-const stylusSource = './src/**/*.styl';
+const htmlSource   = './src/html/*.html';
+const stylusSource = './src/styles/main.styl';
+const jsSource     = './src/js/*.js';
 const assetsSource = './assets/*';
 const destination  = './build';
 
@@ -19,9 +20,13 @@ gulp.task('js', () => {
 // Build Stylus stylesheets
 gulp.task('styl', () => {
   return gulp.src(stylusSource)
-    .pipe(stylus({
-      compress: true
-    }))
+    .pipe(stylus())
+    .pipe(gulp.dest(destination));
+});
+
+// Copy markup
+gulp.task('html', () => {
+  return gulp.src(htmlSource)
     .pipe(gulp.dest(destination));
 });
 
@@ -33,10 +38,12 @@ gulp.task('assets', () => {
 
 // Build everything and watch for changes
 gulp.task('default', [
-    'js',
+    'html',
     'styl',
+    'js',
     'assets'
   ], () => {
+    gulp.watch(htmlSource, ['html']);
     gulp.watch(jsSource, ['js']);
     gulp.watch(stylusSource, ['styl']);
     gulp.watch(assetsSource, ['assets']);
