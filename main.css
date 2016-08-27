@@ -1,0 +1,354 @@
+* {
+  margin: 0;
+  padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+[role="note"] {
+  display: none;
+}
+body {
+  width: 1280px;
+  height: 720px;
+  margin-left: -640px;
+  margin-top: -360px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  display: none;
+}
+.view body {
+  position: static;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  overflow: visible;
+  overflow-x: hidden;
+/* undo Dz.onresize */
+  transform: none !important;
+  -moz-transform: none !important;
+  -webkit-transform: none !important;
+  -o-transform: none !important;
+  -ms-transform: none !important;
+}
+.view head,
+.view head > title {
+  display: block;
+}
+section {
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+.view section {
+  pointer-events: auto;
+  position: static;
+  width: 1280px;
+  height: 720px;
+  margin: -150px -200px;
+  float: left;
+  transform: scale(0.4);
+  -moz-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
+  -o-transform: scale(0.4);
+  -ms-transform: scale(0.4);
+}
+.view section > * {
+  pointer-events: none;
+}
+section[aria-selected] {
+  pointer-events: auto;
+}
+html {
+  overflow: hidden;
+}
+html.view {
+  overflow: visible;
+}
+body.loaded {
+  display: block;
+}
+.incremental {
+  visibility: hidden;
+}
+.incremental[active] {
+  visibility: visible;
+}
+#progress-bar {
+  bottom: 0;
+  position: absolute;
+  -moz-transition: width 400ms linear 0s;
+  -webkit-transition: width 400ms linear 0s;
+  -ms-transition: width 400ms linear 0s;
+  transition: width 400ms linear 0s;
+}
+.view #progress-bar {
+  display: none;
+}
+html,
+.view body {
+  background-color: #222;
+  counter-reset: slideidx;
+}
+body,
+.view section {
+  background-color: #222;
+  border-radius: 5px;
+  color: #fff;
+}
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #25d8fd;
+}
+section,
+.view head > title {
+  font-family: 'Avenir Next', arial, serif;
+  font-size: 30px;
+}
+section {
+  padding: 0 100px;
+}
+.view section:after {
+  counter-increment: slideidx;
+  content: counter(slideidx, decimal-leading-zero);
+  position: absolute;
+  bottom: -80px;
+  right: 100px;
+  color: #fff;
+}
+.view head > title {
+  color: #fff;
+  text-align: center;
+  margin: 1em 0 1em 0;
+}
+section.background-image {
+  background-size: cover;
+}
+h1 {
+  margin-top: 125px;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 400;
+  color: #25d8fd;
+}
+h2 {
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.5em;
+  color: #25d8fd;
+}
+h3 {
+  font-size: 48px;
+  text-align: center;
+  color: #25d8fd;
+}
+small {
+  color: #999;
+  margin-left: 0.25em;
+}
+p {
+  margin: 75px;
+  font-size: 35px;
+}
+p.big-text {
+  font-size: 110px;
+  text-align: justify;
+  text-transform: uppercase;
+  color: #25d8fd;
+  padding: 100px;
+}
+blockquote {
+  border-left: #d3d3d3 solid 5px;
+  font-size: 48px;
+  margin: 150px;
+  padding: 25px;
+}
+blockquote:before {
+  content: open-quote;
+}
+blockquote:after {
+  content: close-quote;
+}
+.container {
+  width: 100%;
+}
+figure {
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+}
+figure > * {
+  position: absolute;
+}
+figure > img,
+figure > video {
+  width: 100%;
+  height: 100%;
+  margin: 0 -200px;
+}
+.img-contain {
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+}
+.img-shadow {
+  box-shadow: 0px 10px 40px 0px rgba(0,0,0,0.4);
+}
+code {
+  padding: 0.3em;
+  margin: 0;
+  font-size: 85%;
+  background-color: #444;
+  color: #25d8fd;
+}
+.img-rounded {
+  border-radius: 5px;
+}
+figcaption {
+  margin: 50px 50px 50px -200px;
+  padding: 5px 20px 5px 70px;
+  border-radius: 0 5px 5px 0;
+  background: #fff;
+  font-size: 30px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 30px;
+  text-align: right;
+  color: #25d8fd;
+  font-weight: 400;
+  font-size: 20px;
+  margin: 0 -200px;
+}
+.hcenter {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.vcenter {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.vcenter.hcenter {
+  transform: translate(-50%, -50%);
+}
+section {
+  -moz-transition: left 400ms linear 0s;
+  -webkit-transition: left 400ms linear 0s;
+  -ms-transition: left 400ms linear 0s;
+  transition: left 400ms linear 0s;
+}
+.view section {
+  -moz-transition: none;
+  -webkit-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+.view section[aria-selected] {
+  border: 5px #f00 solid;
+}
+section {
+  left: -150%;
+}
+section[aria-selected] {
+  left: 0;
+}
+section[aria-selected] ~ section {
+  left: 150%;
+}
+.incremental > * {
+  opacity: 1;
+}
+.incremental > *[aria-selected] {
+  opacity: 1;
+}
+.incremental > *[aria-selected] ~ * {
+  opacity: 0;
+}
+#progress-bar {
+  height: 2px;
+  background: #aaa;
+}
+video#bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -webkit-filter: brightness(0.3);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background-size: cover;
+}
+img#bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -webkit-filter: brightness(0.3);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background-size: cover;
+}
+iframe {
+  display: block;
+  margin: 0 auto;
+}
+.terminal {
+  height: 800px;
+  width: 100%;
+}
+div.terminal {
+  text-align: center;
+  background: #222;
+  padding: 350px;
+}
+.terminal > buttonfont-size: 18px,
+#toc {
+  margin-top: 40px;
+}
+li {
+  margin: 25px 0 10px 0;
+}
+.logo {
+  width: 30%;
+}
+.facade-minimal {
+  position: relative;
+  margin: 24px 0;
+  padding: 55px 0 0 0;
+  box-shadow: 0px 20px 50px rgba(0,0,0,0.3);
+  font-family: sans-serif;
+  color: #454545;
+  border-radius: 3px;
+  overflow-x: hidden;
+}
+.facade-minimal:before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 56px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-radius: 3px 3px 0px 0px;
+  background: url("data:image/svg+xml;charset=utf-8,<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="minimal-browser-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve"><g id="Ellipse_1"><g><circle fill-rule="evenodd" clip-rule="evenodd" fill="%23B3B3B3" cx="8" cy="8" r="5"/></g></g></svg>") 16px 22px no-repeat, url("data:image/svg+xml;charset=utf-8,<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="minimal-browser-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve"><g id="Ellipse_1"><g><circle fill-rule="evenodd" clip-rule="evenodd" fill="%23B3B3B3" cx="8" cy="8" r="5"/></g></g></svg>") 32px 22px no-repeat, url("data:image/svg+xml;charset=utf-8,<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="minimal-browser-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve"><g id="Ellipse_1"><g><circle fill-rule="evenodd" clip-rule="evenodd" fill="%23B3B3B3" cx="8" cy="8" r="5"/></g></g></svg>") 48px 22px no-repeat, url("data:image/svg+xml;charset=utf-8,<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="minimal-browser-settings" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve"><g id="Menu_icon"><g><path fill-rule="evenodd" clip-rule="evenodd" fill="%23B3B3B3" d="M1,1v3h14V1H1z M1,10h14V7H1V10z M1,16h14v-3H1V16z"/></g></g></svg>") right 16px top 22px no-repeat, #e8e8e8;
+}

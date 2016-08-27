@@ -1,3 +1,5 @@
+"use strict";
+
 var Dz = {
     remoteWindows: [],
     idx: -1,
@@ -20,7 +22,7 @@ Dz.init = function () {
     this.setupTouchEvents();
     this.onresize();
     this.setupView();
-}
+};
 
 Dz.setupParams = function () {
     var p = window.location.search.substr(1).split('&');
@@ -29,55 +31,56 @@ Dz.setupParams = function () {
         Dz.params[keyVal[0]] = decodeURIComponent(keyVal[1]);
     });
     // Specific params handling
-    if (!+this.params.autoplay)
-        dzQueryAll.forEach(dzQueryAll("video"), function (v) {
-            v.controls = true
-        });
-}
+    if (!+this.params.autoplay) dzQueryAll.forEach(dzQueryAll("video"), function (v) {
+        v.controls = true;
+    });
+};
 
 Dz.onkeydown = function (aEvent) {
     // Don't intercept keyboard shortcuts
-    if (aEvent.altKey
-            || aEvent.ctrlKey
-            || aEvent.metaKey
-            || aEvent.shiftKey) {
+    if (aEvent.altKey || aEvent.ctrlKey || aEvent.metaKey || aEvent.shiftKey) {
         return;
     }
     if (aEvent.keyCode == 37 // left arrow
-            || aEvent.keyCode == 38 // up arrow
-            || aEvent.keyCode == 33 // page up
+    || aEvent.keyCode == 38 // up arrow
+    || aEvent.keyCode == 33 // page up
     ) {
-        aEvent.preventDefault();
-        this.back();
-    }
+            aEvent.preventDefault();
+            this.back();
+        }
     if (aEvent.keyCode == 39 // right arrow
-            || aEvent.keyCode == 40 // down arrow
-            || aEvent.keyCode == 34 // page down
+    || aEvent.keyCode == 40 // down arrow
+    || aEvent.keyCode == 34 // page down
     ) {
-        aEvent.preventDefault();
-        this.forward();
-    }
-    if (aEvent.keyCode == 35) { // end
+            aEvent.preventDefault();
+            this.forward();
+        }
+    if (aEvent.keyCode == 35) {
+        // end
         aEvent.preventDefault();
         this.goEnd();
     }
-    if (aEvent.keyCode == 36) { // home
+    if (aEvent.keyCode == 36) {
+        // home
         aEvent.preventDefault();
         this.goStart();
     }
-    if (aEvent.keyCode == 32) { // space
+    if (aEvent.keyCode == 32) {
+        // space
         aEvent.preventDefault();
         this.toggleContent();
     }
-    if (aEvent.keyCode == 70) { // f
+    if (aEvent.keyCode == 70) {
+        // f
         aEvent.preventDefault();
         this.goFullscreen();
     }
-    if (aEvent.keyCode == 79) { // o
+    if (aEvent.keyCode == 79) {
+        // o
         aEvent.preventDefault();
         this.toggleView();
     }
-}
+};
 
 /* Touch Events */
 
@@ -108,7 +111,7 @@ Dz.setupTouchEvents = function () {
             }
         }
     }
-}
+};
 
 Dz.setupView = function () {
     document.body.addEventListener("click", function (e) {
@@ -118,7 +121,7 @@ Dz.setupView = function () {
         Dz.html.classList.remove("view");
         Dz.setCursor(Dz.slides.indexOf(e.target) + 1);
     }, false);
-}
+};
 
 /* Adapt the size of the slides to the window */
 
@@ -126,26 +129,26 @@ Dz.onresize = function () {
     var db = document.body;
     var sx = db.clientWidth / window.innerWidth;
     var sy = db.clientHeight / window.innerHeight;
-    var transform = "scale(" + (1 / Math.max(sx, sy)) + ")";
+    var transform = "scale(" + 1 / Math.max(sx, sy) + ")";
 
     db.style.MozTransform = transform;
     db.style.WebkitTransform = transform;
     db.style.OTransform = transform;
     db.style.msTransform = transform;
     db.style.transform = transform;
-}
-
+};
 
 Dz.getNotes = function (aIdx) {
     var s = dzQuery("section:nth-of-type(" + aIdx + ")");
     var d = s.dzQuery("[role='note']");
     return d ? d.innerHTML : "";
-}
+};
 
 Dz.onmessage = function (aEvent) {
-    var argv = aEvent.data.split(" "), argc = argv.length;
+    var argv = aEvent.data.split(" "),
+        argc = argv.length;
     argv.forEach(function (e, i, a) {
-        a[i] = decodeURIComponent(e)
+        a[i] = decodeURIComponent(e);
     });
     var win = aEvent.source;
     if (argv[0] === "REGISTER" && argc === 1) {
@@ -154,23 +157,15 @@ Dz.onmessage = function (aEvent) {
         this.postMsg(win, "CURSOR", this.idx + "." + this.step);
         return;
     }
-    if (argv[0] === "BACK" && argc === 1)
-        this.back();
-    if (argv[0] === "FORWARD" && argc === 1)
-        this.forward();
-    if (argv[0] === "START" && argc === 1)
-        this.goStart();
-    if (argv[0] === "END" && argc === 1)
-        this.goEnd();
-    if (argv[0] === "TOGGLE_CONTENT" && argc === 1)
-        this.toggleContent();
-    if (argv[0] === "SET_CURSOR" && argc === 2)
-        window.location.hash = "#" + argv[1];
-    if (argv[0] === "GET_CURSOR" && argc === 1)
-        this.postMsg(win, "CURSOR", this.idx + "." + this.step);
-    if (argv[0] === "GET_NOTES" && argc === 1)
-        this.postMsg(win, "NOTES", this.getNotes(this.idx));
-}
+    if (argv[0] === "BACK" && argc === 1) this.back();
+    if (argv[0] === "FORWARD" && argc === 1) this.forward();
+    if (argv[0] === "START" && argc === 1) this.goStart();
+    if (argv[0] === "END" && argc === 1) this.goEnd();
+    if (argv[0] === "TOGGLE_CONTENT" && argc === 1) this.toggleContent();
+    if (argv[0] === "SET_CURSOR" && argc === 2) window.location.hash = "#" + argv[1];
+    if (argv[0] === "GET_CURSOR" && argc === 1) this.postMsg(win, "CURSOR", this.idx + "." + this.step);
+    if (argv[0] === "GET_NOTES" && argc === 1) this.postMsg(win, "NOTES", this.getNotes(this.idx));
+};
 
 Dz.toggleContent = function () {
     // If a Video is present in this new slide, play it.
@@ -186,19 +181,19 @@ Dz.toggleContent = function () {
             }
         }
     }
-}
+};
 
 Dz.setCursor = function (aIdx, aStep) {
     // If the user change the slide number in the URL bar, jump
     // to this slide.
-    aStep = (aStep != 0 && typeof aStep !== "undefined") ? "." + aStep : ".0";
+    aStep = aStep != 0 && typeof aStep !== "undefined" ? "." + aStep : ".0";
     window.location.hash = "#" + aIdx + aStep;
-}
+};
 
 Dz.onhashchange = function () {
     var cursor = window.location.hash.split("#"),
-            newidx = 1,
-            newstep = 0;
+        newidx = 1,
+        newstep = 0;
     if (cursor.length == 2) {
         newidx = ~~cursor[1].split(".")[0];
         newstep = ~~cursor[1].split(".")[1];
@@ -217,23 +212,21 @@ Dz.onhashchange = function () {
     for (var i = 0; i < this.remoteWindows.length; i++) {
         this.postMsg(this.remoteWindows[i], "CURSOR", this.idx + "." + this.step);
     }
-}
+};
 
 Dz.back = function () {
     if (this.idx == 1 && this.step == 0) {
         return;
     }
     if (this.step == 0) {
-        this.setCursor(this.idx - 1,
-                this.slides[this.idx - 2].dzQueryAll('.incremental > *').length);
+        this.setCursor(this.idx - 1, this.slides[this.idx - 2].dzQueryAll('.incremental > *').length);
     } else {
         this.setCursor(this.idx, this.step - 1);
     }
-}
+};
 
 Dz.forward = function () {
-    if (this.idx >= this.slides.length &&
-            this.step >= this.slides[this.idx - 1].dzQueryAll('.incremental > *').length) {
+    if (this.idx >= this.slides.length && this.step >= this.slides[this.idx - 1].dzQueryAll('.incremental > *').length) {
         return;
     }
     if (this.step >= this.slides[this.idx - 1].dzQueryAll('.incremental > *').length) {
@@ -241,17 +234,17 @@ Dz.forward = function () {
     } else {
         this.setCursor(this.idx, this.step + 1);
     }
-}
+};
 
 Dz.goStart = function () {
     this.setCursor(1, 0);
-}
+};
 
 Dz.goEnd = function () {
     var lastIdx = this.slides.length;
     var lastStep = this.slides[lastIdx - 1].dzQueryAll('.incremental > *').length;
     this.setCursor(lastIdx, lastStep);
-}
+};
 
 Dz.toggleView = function () {
     this.html.classList.toggle("view");
@@ -259,7 +252,7 @@ Dz.toggleView = function () {
     if (this.html.classList.contains("view")) {
         dzQuery("section[aria-selected]").scrollIntoView(true);
     }
-}
+};
 
 Dz.setSlide = function (aIdx) {
     this.idx = aIdx;
@@ -286,7 +279,7 @@ Dz.setSlide = function (aIdx) {
         this.idx = -1;
         // console.warn("Slide doesn't exist.");
     }
-}
+};
 
 Dz.setIncremental = function (aStep) {
     this.step = aStep;
@@ -307,44 +300,40 @@ Dz.setIncremental = function (aStep) {
         next.parentNode.setAttribute('active', true);
         var found = false;
         dzQueryAll.forEach(incrementals, function (aNode) {
-            if (aNode != next.parentNode)
-                if (found)
-                    aNode.removeAttribute('active');
-                else
-                    aNode.setAttribute('active', true);
-            else
-                found = true;
+            if (aNode != next.parentNode) {
+                if (found) aNode.removeAttribute('active');else aNode.setAttribute('active', true);
+            } else found = true;
         });
     } else {
         setCursor(this.idx, 0);
     }
     return next;
-}
+};
 
 Dz.goFullscreen = function () {
     var html = dzQuery('html'),
-            requestFullscreen = html.requestFullscreen || html.requestFullScreen || html.mozRequestFullScreen || html.webkitRequestFullScreen;
+        requestFullscreen = html.requestFullscreen || html.requestFullScreen || html.mozRequestFullScreen || html.webkitRequestFullScreen;
     if (requestFullscreen) {
         requestFullscreen.apply(html);
     }
-}
+};
 
 Dz.setProgress = function (aIdx, aStep) {
     var slide = dzQuery("section:nth-of-type(" + aIdx + ")");
-    if (!slide)
-        return;
+    if (!slide) return;
     var steps = slide.dzQueryAll('.incremental > *').length + 1,
-            slideSize = 100 / (this.slides.length - 1),
-            stepSize = slideSize / steps;
-    this.progressBar.style.width = ((aIdx - 1) * slideSize + aStep * stepSize) + '%';
-}
+        slideSize = 100 / (this.slides.length - 1),
+        stepSize = slideSize / steps;
+    this.progressBar.style.width = (aIdx - 1) * slideSize + aStep * stepSize + '%';
+};
 
-Dz.postMsg = function (aWin, aMsg) { // [arg0, [arg1...]]
+Dz.postMsg = function (aWin, aMsg) {
+    // [arg0, [arg1...]]
     aMsg = [aMsg];
-    for (var i = 2; i < arguments.length; i++)
+    for (var i = 2; i < arguments.length; i++) {
         aMsg.push(encodeURIComponent(arguments[i]));
-    aWin.postMessage(aMsg.join(" "), "*");
-}
+    }aWin.postMessage(aMsg.join(" "), "*");
+};
 
 function init() {
     Dz.init();
@@ -361,19 +350,14 @@ if (!Function.prototype.bind) {
 
         // closest thing possible to the ECMAScript 5 internal IsCallable
         // function
-        if (typeof this !== "function")
-            throw new TypeError(
-                    "Function.prototype.bind - what is trying to be fBound is not callable"
-            );
+        if (typeof this !== "function") throw new TypeError("Function.prototype.bind - what is trying to be fBound is not callable");
 
         var aArgs = Array.prototype.slice.call(arguments, 1),
-                fToBind = this,
-                fNOP = function () {
-                },
-                fBound = function () {
-                    return fToBind.apply(this instanceof fNOP ? this : oThis || window,
-                            aArgs.concat(Array.prototype.slice.call(arguments)));
-                };
+            fToBind = this,
+            fNOP = function fNOP() {},
+            fBound = function fBound() {
+            return fToBind.apply(this instanceof fNOP ? this : oThis || window, aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
 
         fNOP.prototype = this.prototype;
         fBound.prototype = new fNOP();
@@ -392,4 +376,4 @@ var dzQueryAll = (HTMLElement.prototype.dzQueryAll = function (aQuery) {
 
 dzQueryAll.forEach = function (nodeList, fun) {
     Array.prototype.forEach.call(nodeList, fun);
-}
+};
