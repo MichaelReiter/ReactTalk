@@ -2,6 +2,11 @@ import React from 'react'
 import Button from './Button'
 
 const Counter = React.createClass({
+  propTypes: {
+    maximum: React.PropTypes.number,
+    minimum: React.PropTypes.number
+  },
+
   getInitialState: function () {
     return {
       count: 0
@@ -9,15 +14,19 @@ const Counter = React.createClass({
   },
 
   increment: function () {
-    this.setState({
-      count: this.state.count + 1
-    })
+    if (this.state.count < this.props.maximum) {
+      this.setState({
+        count: this.state.count + 1
+      })
+    }
   },
 
   decrement: function () {
-    this.setState({
-      count: this.state.count - 1
-    })
+    if (this.state.count > this.props.minimum) {
+      this.setState({
+        count: this.state.count - 1
+      })
+    }
   },
 
   render: function () {

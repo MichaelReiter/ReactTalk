@@ -4,7 +4,7 @@ import Counter from './Counter'
 const App = () => {
   return (
     <div className='app'>
-      <Counter />
+      <Counter maximum={10} minimum={0} />
     </div>
   )
 }

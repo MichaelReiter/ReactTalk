@@ -8,4 +8,9 @@ const Button = props => {
   )
 }
 
+Button.propTypes = {
+  label: React.PropTypes.string.isRequired,
+  onClick: React.PropTypes.func.isRequired
+}
+
 export default Button
