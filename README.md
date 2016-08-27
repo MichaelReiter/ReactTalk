@@ -1,5 +1,9 @@
 # Building Modern Web Apps with React and ES6
 
+## Check out the presentation
+
+[Link](https://michaelreiter.github.io/ReactTalk/)
+
 ## Getting Started
 
 * Install Git if you haven't already: [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
