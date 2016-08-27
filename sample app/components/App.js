@@ -1,13 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Counter from './Counter'
 
-const App = React.createClass({
-  render: function () {
-    return (
-      <div>
-        hello
-      </div>
-    );
-  }
-});
+const App = () => {
+  return (
+    <div className='app'>
+      <Counter />
+    </div>
+  )
+}
 
-export default App;
+export default App
